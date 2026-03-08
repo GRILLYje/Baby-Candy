@@ -2,8 +2,6 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
 const config = require("./config/config");
 
-const createPanel = require("./panels/activityPanel");
-
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds
@@ -23,18 +21,12 @@ fs.readdirSync("./commands").forEach(file => {
 
 fs.readdirSync("./events").forEach(file => {
   const event = require(`./events/${file}`);
-  client.on(event.name,(...args)=>event.execute(...args,client));
-});
 
-/* บอทออนไลน์ */
-
-client.once("ready", async () => {
-
-console.log(`Logged in as ${client.user.tag}`);
-
-/* ส่ง Panel */
-
-createPanel(client,"1480128485287526460");
+  if(event.once){
+    client.once(event.name,(...args)=>event.execute(...args,client));
+  }else{
+    client.on(event.name,(...args)=>event.execute(...args,client));
+  }
 
 });
 

@@ -9,7 +9,8 @@ channels:{
 rob: process.env.ROB_LOG_CHANNEL,
 house: process.env.HOUSE_LOG_CHANNEL,
 airdrop: process.env.AIRDROP_LOG_CHANNEL,
-summary: process.env.SUMMARY_LOG_CHANNEL
+summary: process.env.SUMMARY_LOG_CHANNEL,
+leave: process.env.LEAVE_LOG_CHANNEL
 }
 
 };

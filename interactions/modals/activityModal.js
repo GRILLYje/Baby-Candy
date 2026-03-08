@@ -55,18 +55,19 @@ await channel.send({embeds:[embed]});
 
 /* บันทึกกิจกรรมลง database */
 
-members.forEach(userId => {
+db.serialize(() => {
 
-    db.run(
-    `INSERT INTO activities (type,user,date) VALUES (?,?,?)`,
-    [type,userId,Date.now()],
-    (err)=>{
-    if(err) console.error("DB Error:",err);
-    }
-    
-    );
-    
-    });
+    const stmt = db.prepare(
+        `INSERT INTO activities (type,user,date) VALUES (?,?,?)`
+        );
+        
+        members.forEach(userId=>{
+        stmt.run(type,userId,Date.now());
+        });
+  
+    stmt.finalize();
+  
+  });
 
 /* ตอบผู้ใช้ */
 
