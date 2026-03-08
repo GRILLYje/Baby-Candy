@@ -169,44 +169,30 @@ module.exports = {
             if (interaction.isUserSelectMenu()) {
 
                 const type = interaction.customId.split("_")[1];
-
+            
                 /* summary */
-
+            
                 if (type === "summary") {
                     await summary(interaction);
                     return;
                 }
-
+            
                 const members = interaction.values;
-
-                memberCache.set(interaction.user.id, {
+            
+                /* เก็บข้อมูลกิจกรรม */
+            
+                client.pendingActivity.set(interaction.user.id, {
                     type: type,
                     members: members
                 });
-
-                const modal = new ModalBuilder()
-                    .setCustomId(`modal_${type}`)
-                    .setTitle("ส่งหลักฐานกิจกรรม");
-
-                const img = new TextInputBuilder()
-                    .setCustomId("image")
-                    .setLabel("ลิงก์รูปหลักฐาน")
-                    .setStyle(TextInputStyle.Short)
-                    .setRequired(true);
-
-                const note = new TextInputBuilder()
-                    .setCustomId("note")
-                    .setLabel("หมายเหตุ (ไม่กรอกก็ได้)")
-                    .setStyle(TextInputStyle.Paragraph)
-                    .setRequired(false);
-
-                modal.addComponents(
-                    new ActionRowBuilder().addComponents(img),
-                    new ActionRowBuilder().addComponents(note)
-                );
-
-                await interaction.showModal(modal);
-
+            
+                /* บอกให้ส่งรูป */
+            
+                await interaction.reply({
+                    content: "📸 กรุณาส่งรูปหลักฐานได้เลย (Ctrl+V หรือ Upload)",
+                    ephemeral: true
+                });
+            
                 return;
             }
 

@@ -3,12 +3,15 @@ const fs = require("fs");
 const config = require("./config/config");
 
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds
-  ]
-});
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent
+    ]
+  });
 
 client.commands = new Map();
+client.pendingActivity = new Map();
 
 /* โหลด commands */
 
