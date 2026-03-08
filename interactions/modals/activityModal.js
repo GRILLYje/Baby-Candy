@@ -1,5 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 const config = require("../../config/config");
+const db = require("../../database/database");
+
 
 module.exports = async (interaction)=>{
 
@@ -50,6 +52,21 @@ ephemeral:true
 }
 
 await channel.send({embeds:[embed]});
+
+/* บันทึกกิจกรรมลง database */
+
+members.forEach(userId => {
+
+    db.run(
+    `INSERT INTO activities (type,user,date) VALUES (?,?,?)`,
+    [type,userId,Date.now()],
+    (err)=>{
+    if(err) console.error("DB Error:",err);
+    }
+    
+    );
+    
+    });
 
 /* ตอบผู้ใช้ */
 
