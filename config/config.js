@@ -1,0 +1,15 @@
+require("dotenv").config();
+
+module.exports = {
+
+token: process.env.TOKEN,
+clientId: process.env.CLIENT_ID,
+
+channels:{
+rob: process.env.ROB_LOG_CHANNEL,
+house: process.env.HOUSE_LOG_CHANNEL,
+airdrop: process.env.AIRDROP_LOG_CHANNEL,
+summary: process.env.SUMMARY_LOG_CHANNEL
+}
+
+};
