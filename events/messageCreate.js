@@ -3,7 +3,7 @@ const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 module.exports = {
   name: "messageCreate",
 
-  async execute(message, client) {   // ต้องมี async ตรงนี้
+  async execute(message, client) {
 
     if (message.author.bot) return;
 
@@ -19,9 +19,22 @@ module.exports = {
     });
 
     const embed = new EmbedBuilder()
-      .setColor("#57F287")
-      .setTitle(`กิจกรรม ${data.type}`)
-      .setDescription(`สมาชิก:\n${data.members.map(id => `<@${id}>`).join("\n")}`)
+      .setColor("#F5A9C8")
+      .setTitle(`📒 Activity Log : ${data.type}`)
+      .addFields(
+        {
+          name: "👤 ผู้บันทึก",
+          value: `<@${message.author.id}>`
+        },
+        {
+          name: "👥 สมาชิกที่เข้าร่วม",
+          value: data.members.map(id => `<@${id}>`).join("\n")
+        },
+        {
+          name: "📝 หมายเหตุ",
+          value: "ไม่มี"
+        }
+      )
       .setImage("attachment://proof.png")
       .setTimestamp();
 
