@@ -12,6 +12,7 @@ const client = new Client({
 
 client.commands = new Map();
 client.pendingActivity = new Map();
+client.pendingMoney = new Map();
 
 /* โหลด commands */
 

@@ -8,7 +8,7 @@ const db = new Database("./database.sqlite", {
 
 console.log("✅ SQLite Connected");
 
-/* ปรับ performance */
+/* performance */
 
 db.exec(`
 PRAGMA journal_mode=WAL;
@@ -16,7 +16,7 @@ PRAGMA synchronous=NORMAL;
 PRAGMA busy_timeout=5000;
 `);
 
-/* สร้าง tables */
+/* ================= ACTIVITIES ================= */
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS activities (
@@ -26,6 +26,8 @@ user TEXT,
 date INTEGER
 );
 `);
+
+/* ================= LEAVES ================= */
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS leaves (
@@ -37,5 +39,50 @@ days INTEGER,
 reason TEXT
 );
 `);
+
+/* ================= MEMBERS ================= */
+
+db.exec(`
+CREATE TABLE IF NOT EXISTS members (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+user_id TEXT,
+role TEXT,
+weapon TEXT
+);
+`);
+
+/* ================= ITEMS (ส่งของ) ================= */
+
+db.exec(`
+CREATE TABLE IF NOT EXISTS items (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+name TEXT,
+amount INTEGER,
+note TEXT,
+status TEXT,
+created_at INTEGER
+);
+`);
+
+/* ================= BALANCES (ยอดเงิน) ================= */
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS balances (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user TEXT,
+  balance INTEGER
+  );
+  `);
+  
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS money_logs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      type TEXT,
+      user TEXT,
+      amount INTEGER,
+      note TEXT,
+      date INTEGER
+    );
+    `);
 
 module.exports = db;

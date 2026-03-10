@@ -4,8 +4,8 @@ module.exports = {
   name: "messageCreate",
 
   async execute(message, client) {
-
     if (message.author.bot) return;
+    if (!message.guild) return;
 
     const data = client.pendingActivity.get(message.author.id);
     if (!data) return;
@@ -48,9 +48,7 @@ module.exports = {
       files: [file]
     });
 
-    await message.delete().catch(()=>{});
-
+    await message.delete().catch(() => {});
     client.pendingActivity.delete(message.author.id);
-
   }
 };
